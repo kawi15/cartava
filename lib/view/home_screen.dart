@@ -26,8 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final Set<Polyline> polylines = {};
   final ValueNotifier<Set<Polyline>> visiblePolylines = ValueNotifier({});
   Timer? _debounceTimer;
+  String? selectedPolylineId;
 
-  // Debounce delay
   static const debounceDuration = Duration(milliseconds: 400);
 
   @override
@@ -45,9 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void loadPolylinesFromState(StravaAuthenticated state) {
-    int i = 1;
+  // TODO zrobić Bloc/Cubit dla zarządzania stanem mapy
+  // TODO uporządkować polylines
 
+  void loadPolylinesFromState(StravaAuthenticated state) {
     for (final activity in state.activities) {
       final encoded = activity.map?.summaryPolyline;
       if (encoded != null && encoded.isNotEmpty) {
@@ -63,17 +64,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
         polylines.add(
           Polyline(
-            polylineId: PolylineId(i.toString()),
+            polylineId: PolylineId(points.hashCode.toString()),
+            consumeTapEvents: true,
             color: Colors.red,
             width: 1,
             points: points,
+            onTap: () {
+              _onPolylineTapped(points.hashCode.toString());
+            }
           ),
         );
-        i++;
       }
     }
 
     visiblePolylines.value = polylines;
+  }
+
+  void _onPolylineTapped(String id) {
+    if (selectedPolylineId == id) {
+      selectedPolylineId = null;
+    } else {
+      selectedPolylineId = id;
+    }
+
+    visiblePolylines.value = visiblePolylines.value.map((polyline) {
+      final isSelected = polyline.polylineId.value == selectedPolylineId;
+      return polyline.copyWith(
+        colorParam: isSelected ? Colors.black : Colors.red
+      );
+    }).toSet();
   }
 
   Future<void> updateVisiblePolylines(LatLngBounds bounds) async {
@@ -82,12 +101,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     for (final singlePolyline in polylines) {
       if (MapService.polylineIntersectsBounds(singlePolyline.points, bounds)) {
+        final isSelected = singlePolyline.polylineId.value == selectedPolylineId;
+
         updatedPolylines.add(
           Polyline(
             polylineId: PolylineId(singlePolyline.points.hashCode.toString()),
-            color: Colors.red,
+            consumeTapEvents: true,
+            color: isSelected ? Colors.black : Colors.red,
             width: 1,
             points: singlePolyline.points,
+            onTap: () {
+              _onPolylineTapped(singlePolyline.points.hashCode.toString());
+            }
           ),
         );
       }
@@ -102,12 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onCameraIdle() {
-    _debounceTimer?.cancel(); // Anuluj poprzedni timer
+    _debounceTimer?.cancel();
 
     _debounceTimer = Timer(debounceDuration, () async {
       final bounds = await _controller.future.then((c) => c.getVisibleRegion());
 
-      // wywołaj metodę, która przefiltruje i zaktualizuje stan polylines
       updateVisiblePolylines(bounds);
     });
   }
@@ -146,7 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-
         }
       ),
     );

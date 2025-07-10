@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<StravaBloc>().add(AppStarted());
+    context.read<StravaBloc>().add(StravaAuthenticationRequested());
     Future.delayed(const Duration(seconds: 2)).then((_) =>
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen())));
   }

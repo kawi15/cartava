@@ -14,13 +14,6 @@ class StravaBloc extends Bloc<StravaEvent, StravaState> {
 
   StravaBloc({required this.stravaRepository}) : super(StravaInitial()) {
     on<AppStarted>((event, emit) async {
-      final token = await SecureStorage.read('token');
-      print('app started token $token');
-      if (token != null) {
-        emit(StravaAuthenticated(const [], isLoading: true));
-        List<SummaryActivity> activities = await stravaRepository.getAllActivities();
-        emit(StravaAuthenticated(activities));
-      }
       // TODO trzebaby zrobić jakieś cachowanie aktywności ze stravy, żeby przy każdym uruchomieniu ich nie pobierać
     });
 

@@ -19,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  // TODO zastanowić się nad simplify polylines by zredukować ścinanie przy zoomie
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   late CameraPosition _initialCameraPosition;
@@ -45,8 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // TODO zrobić Bloc/Cubit dla zarządzania stanem mapy
-  // TODO uporządkować polylines
+  // TODO create BloC/Cubit for map management
 
   void loadPolylinesFromState(StravaAuthenticated state) {
     for (final activity in state.activities) {
@@ -89,10 +87,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
     visiblePolylines.value = visiblePolylines.value.map((polyline) {
       final isSelected = polyline.polylineId.value == selectedPolylineId;
+
       return polyline.copyWith(
-        colorParam: isSelected ? Colors.black : Colors.red
+          colorParam: isSelected ? Colors.black : Colors.red,
       );
     }).toSet();
+
+    //TODO reorder set to avoid tapped polyline to be hide under others
+
+    showModalBottomSheet(
+        context: context,
+
+        builder: (ctx) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                  width: MediaQuery.of(ctx).size.width,
+                  padding: const EdgeInsets.all(16),
+                  child: Text(textAlign: TextAlign.center, 'polyline id: $id')),
+            ],
+          );
+        }).then((_) {
+          selectedPolylineId = null;
+
+          visiblePolylines.value = visiblePolylines.value.map((polyline) {
+            return polyline.copyWith(
+              colorParam: Colors.red,
+            );
+          }).toSet();
+        });
   }
 
   Future<void> updateVisiblePolylines(LatLngBounds bounds) async {
@@ -152,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   initialCameraPosition: _initialCameraPosition,
                   onMapCreated: (controller) => _controller.complete(controller),
                   onCameraIdle: _onCameraIdle,
-                  polylines: polylines ?? {},
+                  polylines: polylines,
                 );
               },
             );

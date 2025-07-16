@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:cartava/bloc/maps/maps_cubit.dart';
+import 'package:cartava/bloc/maps/maps_state.dart';
 import 'package:cartava/bloc/strava/strava_bloc.dart';
 import 'package:cartava/bloc/strava/strava_event.dart';
 import 'package:cartava/services/map_service.dart';
+import 'package:cartava/widgets/single_activity_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -44,8 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // TODO create BloC/Cubit for map management
-
   void loadPolylinesFromState(StravaAuthenticated state) {
     for (final activity in state.activities) {
       final encoded = activity.map?.summaryPolyline;
@@ -67,87 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.red,
             width: 1,
             points: points,
-            onTap: () {
-              _onPolylineTapped(points.hashCode.toString());
-            }
+            onTap: () => context.read<MapsCubit>().onPolylineTapped(points.hashCode.toString())
           ),
         );
       }
     }
 
-    visiblePolylines.value = polylines;
-  }
-
-  void _onPolylineTapped(String id) {
-    if (selectedPolylineId == id) {
-      selectedPolylineId = null;
-    } else {
-      selectedPolylineId = id;
-    }
-
-    visiblePolylines.value = visiblePolylines.value.map((polyline) {
-      final isSelected = polyline.polylineId.value == selectedPolylineId;
-
-      return polyline.copyWith(
-          colorParam: isSelected ? Colors.black : Colors.red,
-      );
-    }).toSet();
-
-    //TODO reorder set to avoid tapped polyline to be hide under others
-
-    showModalBottomSheet(
-        context: context,
-
-        builder: (ctx) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                  width: MediaQuery.of(ctx).size.width,
-                  padding: const EdgeInsets.all(16),
-                  child: Text(textAlign: TextAlign.center, 'polyline id: $id')),
-            ],
-          );
-        }).then((_) {
-          selectedPolylineId = null;
-
-          visiblePolylines.value = visiblePolylines.value.map((polyline) {
-            return polyline.copyWith(
-              colorParam: Colors.red,
-            );
-          }).toSet();
-        });
-  }
-
-  Future<void> updateVisiblePolylines(LatLngBounds bounds) async {
-    final updatedPolylines = <Polyline>{};
-    final stopwatch = Stopwatch()..start();
-
-    for (final singlePolyline in polylines) {
-      if (MapService.polylineIntersectsBounds(singlePolyline.points, bounds)) {
-        final isSelected = singlePolyline.polylineId.value == selectedPolylineId;
-
-        updatedPolylines.add(
-          Polyline(
-            polylineId: PolylineId(singlePolyline.points.hashCode.toString()),
-            consumeTapEvents: true,
-            color: isSelected ? Colors.black : Colors.red,
-            width: 1,
-            points: singlePolyline.points,
-            onTap: () {
-              _onPolylineTapped(singlePolyline.points.hashCode.toString());
-            }
-          ),
-        );
-      }
-    }
-
-    print('count ${polylines.length}');
-    print('updatedCount ${updatedPolylines.length}');
-    stopwatch.stop();
-    print('updateVisiblePolylines took: ${stopwatch.elapsedMilliseconds}ms');
-
-    visiblePolylines.value = updatedPolylines;
+    context.read<MapsCubit>().setPolylines(polylines);
   }
 
   void _onCameraIdle() {
@@ -156,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _debounceTimer = Timer(debounceDuration, () async {
       final bounds = await _controller.future.then((c) => c.getVisibleRegion());
 
-      updateVisiblePolylines(bounds);
+      if (mounted) {
+        context.read<MapsCubit>().updateVisiblePolylines(bounds);
+      }
     });
   }
 
@@ -168,18 +97,24 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is StravaAuthenticated && !state.isLoading) {
             loadPolylinesFromState(state);
 
-            return ValueListenableBuilder<Set<Polyline>>(
-              valueListenable: visiblePolylines,
-              builder: (context, polylines, _) {
-                return GoogleMap(
-                  mapType: MapType.normal,
-                  initialCameraPosition: _initialCameraPosition,
-                  onMapCreated: (controller) => _controller.complete(controller),
-                  onCameraIdle: _onCameraIdle,
-                  polylines: polylines,
-                );
-              },
-            );
+            return BlocBuilder<MapsCubit, MapsState>(builder: (context, mapsState) {
+              return Stack(
+                children: [
+                  GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: _initialCameraPosition,
+                    onMapCreated: (controller) => _controller.complete(controller),
+                    onCameraIdle: _onCameraIdle,
+                    polylines: mapsState.visiblePolylines,
+                  ),
+                  if (mapsState.selectedPolylineId != null)
+                    SingleActivityInfo(
+                      polylineId: mapsState.selectedPolylineId!,
+                      onClose: context.read<MapsCubit>().clearSelection,
+                    ),
+                ],
+              );
+            });
           } else if (state is StravaAuthenticated && state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),

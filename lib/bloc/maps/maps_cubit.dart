@@ -25,12 +25,12 @@ class MapsCubit extends Cubit<MapsState> {
 
         updatedPolylines.add(
           Polyline(
-              polylineId: PolylineId(singlePolyline.points.hashCode.toString()),
+              polylineId: PolylineId(singlePolyline.polylineId.value),
               consumeTapEvents: true,
               color: isSelected ? Colors.black : Colors.red,
               width: 1,
               points: singlePolyline.points,
-              onTap: () => onPolylineTapped(singlePolyline.points.hashCode.toString())
+              onTap: () => onPolylineTapped(singlePolyline.polylineId.value)
           ),
         );
       }

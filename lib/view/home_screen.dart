@@ -63,12 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
         polylines.add(
           Polyline(
-            polylineId: PolylineId(points.hashCode.toString()),
+            polylineId: PolylineId(activity.id.toString()),
             consumeTapEvents: true,
             color: Colors.red,
             width: 1,
             points: points,
-            onTap: () => context.read<MapsCubit>().onPolylineTapped(points.hashCode.toString())
+            onTap: () => context.read<MapsCubit>().onPolylineTapped(activity.id.toString())
           ),
         );
       }

@@ -66,7 +66,7 @@ class _SingleActivityInfoState extends State<SingleActivityInfo> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Distance: ${activity.distance! / 1000} km'
+                      'Distance: ${(activity.distance! / 1000).toStringAsFixed(2)} km'
                     ),
                     const SizedBox(height: 8),
                     Text(

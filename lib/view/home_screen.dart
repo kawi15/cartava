@@ -91,13 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<StravaBloc, StravaState>(
-        builder: (context, state) {
-          if (state is StravaAuthenticated && !state.isLoading) {
-            loadPolylinesFromState(state);
+    return BlocBuilder<StravaBloc, StravaState>(
+      builder: (context, state) {
+        if (state is StravaAuthenticated && !state.isLoading) {
+          loadPolylinesFromState(state);
 
-            return BlocBuilder<MapsCubit, MapsState>(builder: (context, mapsState) {
+          return Scaffold(
+            body: BlocBuilder<MapsCubit, MapsState>(builder: (context, mapsState) {
               return Stack(
                 children: [
                   GoogleMap(
@@ -114,23 +114,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                 ],
               );
-            });
-          } else if (state is StravaAuthenticated && state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    context.read<StravaBloc>().add(StravaAuthenticationRequested());
-                  },
-                  child: const Text('login')
+            }),
+            drawer: Drawer(
+              child: Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(8),
+                child: ListView.builder(
+                  itemCount: state.activities.length,
+                  itemBuilder: (ctx, index) {
+                    return ListTile(
+                      title: Text('${state.activities[index].name}'),
+                      subtitle: Text('${(state.activities[index].distance! / 1000).toStringAsFixed(2)} km'),
+                    );
+                }),
+              ),
+            ),
+          );
+        } else if (state is StravaAuthenticated && state.isLoading) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
               ),
             );
-          }
+        } else {
+            return Scaffold(
+              body: Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      context.read<StravaBloc>().add(StravaAuthenticationRequested());
+                    },
+                    child: const Text('login')
+                ),
+              ),
+            );
         }
-      ),
+      }
     );
   }
 }

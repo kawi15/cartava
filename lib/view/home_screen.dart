@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   if (mapsState.selectedPolylineId != null)
                     SingleActivityInfo(
+                      key: ValueKey(mapsState.selectedPolylineId),
                       polylineId: mapsState.selectedPolylineId!,
                       onClose: context.read<MapsCubit>().clearSelection,
                     ),
@@ -125,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListTile(
                       title: Text('${state.activities[index].name}'),
                       subtitle: Text('${(state.activities[index].distance! / 1000).toStringAsFixed(2)} km'),
+                      onTap: () => context.read<MapsCubit>().onPolylineTapped(state.activities[index].id.toString()),
                     );
                 }),
               ),

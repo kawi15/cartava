@@ -53,7 +53,6 @@ class MapsCubit extends Cubit<MapsState> {
   }
 
   void onPolylineTapped(String id) {
-    //TODO get information about this activity
     final allVisiblePolylines = state.visiblePolylines.toList();
     final selected = allVisiblePolylines.firstWhere((p) => p.polylineId.value == id);
     final others = allVisiblePolylines.where((p) => p.polylineId.value != id).toList();
@@ -64,5 +63,9 @@ class MapsCubit extends Cubit<MapsState> {
     ];
 
     emit(state.copyWith(visiblePolylines: reordered.toSet(), selectedPolylineId: id));
+  }
+
+  void onPolylineTappedFromDrawer(String id) {
+    //TODO
   }
 }

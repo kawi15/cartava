@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<MapsCubit>().requestLocationPermission();
     _initialCameraPosition = const CameraPosition(
       target: LatLng(52.0, 19.0),
       zoom: 5.5,
@@ -96,39 +97,43 @@ class _HomeScreenState extends State<HomeScreen> {
         if (state is StravaAuthenticated && !state.isLoading) {
           loadPolylinesFromState(state);
 
-          return Scaffold(
-            body: BlocBuilder<MapsCubit, MapsState>(builder: (context, mapsState) {
-              return Stack(
-                children: [
-                  GoogleMap(
-                    mapType: MapType.normal,
-                    initialCameraPosition: _initialCameraPosition,
-                    onMapCreated: (controller) => _controller.complete(controller),
-                    onCameraIdle: _onCameraIdle,
-                    polylines: mapsState.visiblePolylines,
-                  ),
-                  if (mapsState.selectedPolylineId != null)
-                    SingleActivityInfo(
-                      key: ValueKey(mapsState.selectedPolylineId),
-                      polylineId: mapsState.selectedPolylineId!,
-                      onClose: context.read<MapsCubit>().clearSelection,
+          return SafeArea(
+            child: Scaffold(
+              body: BlocBuilder<MapsCubit, MapsState>(builder: (context, mapsState) {
+                return Stack(
+                  children: [
+                    GoogleMap(
+                      mapType: MapType.normal,
+                      initialCameraPosition: _initialCameraPosition,
+                      onMapCreated: (controller) => _controller.complete(controller),
+                      onCameraIdle: _onCameraIdle,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                      polylines: mapsState.visiblePolylines,
                     ),
-                ],
-              );
-            }),
-            drawer: Drawer(
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(8),
-                child: ListView.builder(
-                  itemCount: state.activities.length,
-                  itemBuilder: (ctx, index) {
-                    return ListTile(
-                      title: Text('${state.activities[index].name}'),
-                      subtitle: Text('${(state.activities[index].distance! / 1000).toStringAsFixed(2)} km'),
-                      onTap: () => context.read<MapsCubit>().onPolylineTapped(state.activities[index].id.toString()),
-                    );
-                }),
+                    if (mapsState.selectedPolylineId != null)
+                      SingleActivityInfo(
+                        key: ValueKey(mapsState.selectedPolylineId),
+                        polylineId: mapsState.selectedPolylineId!,
+                        onClose: context.read<MapsCubit>().clearSelection,
+                      ),
+                  ],
+                );
+              }),
+              drawer: Drawer(
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(8),
+                  child: ListView.builder(
+                    itemCount: state.activities.length,
+                    itemBuilder: (ctx, index) {
+                      return ListTile(
+                        title: Text('${state.activities[index].name}'),
+                        subtitle: Text('${(state.activities[index].distance! / 1000).toStringAsFixed(2)} km'),
+                        onTap: () => context.read<MapsCubit>().onPolylineTapped(state.activities[index].id.toString()),
+                      );
+                  }),
+                ),
               ),
             ),
           );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../services/map_service.dart';
 import 'maps_state.dart';
@@ -10,6 +11,15 @@ class MapsCubit extends Cubit<MapsState> {
 
   MapsCubit({required this.mapService})
       : super(const MapsState(allPolylines: {}, visiblePolylines: {}, selectedPolylineId: null));
+
+  Future<void> requestLocationPermission() async {
+    var status = await Permission.location.request();
+    if (status.isGranted) {
+
+    } else {
+
+    }
+  }
 
   void setPolylines(Set<Polyline> polylines) {
     emit(state.copyWith(allPolylines: polylines, visiblePolylines: polylines));

@@ -8,8 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:strava_client/strava_client.dart';
 
 import '../secret.dart';
+import 'database/database.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = AppDatabase();
   runApp(const MyApp());
 }
 

@@ -12,8 +12,12 @@ class $PolylinesTable extends Polylines
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [id];
   @override
@@ -22,8 +26,10 @@ class $PolylinesTable extends Polylines
   String get actualTableName => $name;
   static const String $name = 'polylines';
   @override
-  VerificationContext validateIntegrity(Insertable<Polyline> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<Polyline> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -40,8 +46,10 @@ class $PolylinesTable extends Polylines
   Polyline map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Polyline(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
     );
   }
 
@@ -62,33 +70,25 @@ class Polyline extends DataClass implements Insertable<Polyline> {
   }
 
   PolylinesCompanion toCompanion(bool nullToAbsent) {
-    return PolylinesCompanion(
-      id: Value(id),
-    );
+    return PolylinesCompanion(id: Value(id));
   }
 
-  factory Polyline.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Polyline.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Polyline(
-      id: serializer.fromJson<int>(json['id']),
-    );
+    return Polyline(id: serializer.fromJson<int>(json['id']));
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-    };
+    return <String, dynamic>{'id': serializer.toJson<int>(id)};
   }
 
-  Polyline copyWith({int? id}) => Polyline(
-        id: id ?? this.id,
-      );
+  Polyline copyWith({int? id}) => Polyline(id: id ?? this.id);
   Polyline copyWithCompanion(PolylinesCompanion data) {
-    return Polyline(
-      id: data.id.present ? data.id.value : this.id,
-    );
+    return Polyline(id: data.id.present ? data.id.value : this.id);
   }
 
   @override
@@ -128,10 +128,7 @@ class PolylinesCompanion extends UpdateCompanion<Polyline> {
   }
 
   PolylinesCompanion copyWith({Value<int>? id, Value<int>? rowid}) {
-    return PolylinesCompanion(
-      id: id ?? this.id,
-      rowid: rowid ?? this.rowid,
-    );
+    return PolylinesCompanion(id: id ?? this.id, rowid: rowid ?? this.rowid);
   }
 
   @override
@@ -165,54 +162,89 @@ class $StravaActivitiesTable extends StravaActivities
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _distanceMeta =
-      const VerificationMeta('distance');
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _distanceMeta = const VerificationMeta(
+    'distance',
+  );
   @override
   late final GeneratedColumn<double> distance = GeneratedColumn<double>(
-      'distance', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+    'distance',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
   late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
-      'start_date', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _isVisibleMeta =
-      const VerificationMeta('isVisible');
+    'start_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isVisibleMeta = const VerificationMeta(
+    'isVisible',
+  );
   @override
   late final GeneratedColumn<bool> isVisible = GeneratedColumn<bool>(
-      'is_visible', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_visible" IN (0, 1))'),
-      defaultValue: const Constant(false));
-  static const VerificationMeta _polylineIdMeta =
-      const VerificationMeta('polylineId');
+    'is_visible',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_visible" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _polylineIdMeta = const VerificationMeta(
+    'polylineId',
+  );
   @override
   late final GeneratedColumn<int> polylineId = GeneratedColumn<int>(
-      'polyline_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES polylines (id)'));
+    'polyline_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES polylines (id)',
+    ),
+  );
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, distance, date, isVisible, polylineId];
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    distance,
+    date,
+    isVisible,
+    polylineId,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'strava_activities';
   @override
-  VerificationContext validateIntegrity(Insertable<StravaActivity> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<StravaActivity> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -222,31 +254,39 @@ class $StravaActivitiesTable extends StravaActivities
     }
     if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
     if (data.containsKey('distance')) {
-      context.handle(_distanceMeta,
-          distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta));
+      context.handle(
+        _distanceMeta,
+        distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta),
+      );
     } else if (isInserting) {
       context.missing(_distanceMeta);
     }
     if (data.containsKey('start_date')) {
-      context.handle(_dateMeta,
-          date.isAcceptableOrUnknown(data['start_date']!, _dateMeta));
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['start_date']!, _dateMeta),
+      );
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
     if (data.containsKey('is_visible')) {
-      context.handle(_isVisibleMeta,
-          isVisible.isAcceptableOrUnknown(data['is_visible']!, _isVisibleMeta));
+      context.handle(
+        _isVisibleMeta,
+        isVisible.isAcceptableOrUnknown(data['is_visible']!, _isVisibleMeta),
+      );
     }
     if (data.containsKey('polyline_id')) {
       context.handle(
-          _polylineIdMeta,
-          polylineId.isAcceptableOrUnknown(
-              data['polyline_id']!, _polylineIdMeta));
+        _polylineIdMeta,
+        polylineId.isAcceptableOrUnknown(data['polyline_id']!, _polylineIdMeta),
+      );
     } else if (isInserting) {
       context.missing(_polylineIdMeta);
     }
@@ -259,18 +299,30 @@ class $StravaActivitiesTable extends StravaActivities
   StravaActivity map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return StravaActivity(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      distance: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}distance'])!,
-      date: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}start_date'])!,
-      isVisible: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_visible'])!,
-      polylineId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}polyline_id'])!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      distance: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}distance'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}start_date'],
+      )!,
+      isVisible: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_visible'],
+      )!,
+      polylineId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}polyline_id'],
+      )!,
     );
   }
 
@@ -287,13 +339,14 @@ class StravaActivity extends DataClass implements Insertable<StravaActivity> {
   final DateTime date;
   final bool isVisible;
   final int polylineId;
-  const StravaActivity(
-      {required this.id,
-      required this.name,
-      required this.distance,
-      required this.date,
-      required this.isVisible,
-      required this.polylineId});
+  const StravaActivity({
+    required this.id,
+    required this.name,
+    required this.distance,
+    required this.date,
+    required this.isVisible,
+    required this.polylineId,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -317,8 +370,10 @@ class StravaActivity extends DataClass implements Insertable<StravaActivity> {
     );
   }
 
-  factory StravaActivity.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory StravaActivity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return StravaActivity(
       id: serializer.fromJson<int>(json['id']),
@@ -342,21 +397,21 @@ class StravaActivity extends DataClass implements Insertable<StravaActivity> {
     };
   }
 
-  StravaActivity copyWith(
-          {int? id,
-          String? name,
-          double? distance,
-          DateTime? date,
-          bool? isVisible,
-          int? polylineId}) =>
-      StravaActivity(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        distance: distance ?? this.distance,
-        date: date ?? this.date,
-        isVisible: isVisible ?? this.isVisible,
-        polylineId: polylineId ?? this.polylineId,
-      );
+  StravaActivity copyWith({
+    int? id,
+    String? name,
+    double? distance,
+    DateTime? date,
+    bool? isVisible,
+    int? polylineId,
+  }) => StravaActivity(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    distance: distance ?? this.distance,
+    date: date ?? this.date,
+    isVisible: isVisible ?? this.isVisible,
+    polylineId: polylineId ?? this.polylineId,
+  );
   StravaActivity copyWithCompanion(StravaActivitiesCompanion data) {
     return StravaActivity(
       id: data.id.present ? data.id.value : this.id,
@@ -364,8 +419,9 @@ class StravaActivity extends DataClass implements Insertable<StravaActivity> {
       distance: data.distance.present ? data.distance.value : this.distance,
       date: data.date.present ? data.date.value : this.date,
       isVisible: data.isVisible.present ? data.isVisible.value : this.isVisible,
-      polylineId:
-          data.polylineId.present ? data.polylineId.value : this.polylineId,
+      polylineId: data.polylineId.present
+          ? data.polylineId.value
+          : this.polylineId,
     );
   }
 
@@ -422,11 +478,11 @@ class StravaActivitiesCompanion extends UpdateCompanion<StravaActivity> {
     this.isVisible = const Value.absent(),
     required int polylineId,
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        name = Value(name),
-        distance = Value(distance),
-        date = Value(date),
-        polylineId = Value(polylineId);
+  }) : id = Value(id),
+       name = Value(name),
+       distance = Value(distance),
+       date = Value(date),
+       polylineId = Value(polylineId);
   static Insertable<StravaActivity> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -447,14 +503,15 @@ class StravaActivitiesCompanion extends UpdateCompanion<StravaActivity> {
     });
   }
 
-  StravaActivitiesCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? name,
-      Value<double>? distance,
-      Value<DateTime>? date,
-      Value<bool>? isVisible,
-      Value<int>? polylineId,
-      Value<int>? rowid}) {
+  StravaActivitiesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<double>? distance,
+    Value<DateTime>? date,
+    Value<bool>? isVisible,
+    Value<int>? polylineId,
+    Value<int>? rowid,
+  }) {
     return StravaActivitiesCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -517,31 +574,48 @@ class $PolylinePointsTable extends PolylinePoints
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _polylineIdMeta =
-      const VerificationMeta('polylineId');
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _polylineIdMeta = const VerificationMeta(
+    'polylineId',
+  );
   @override
   late final GeneratedColumn<int> polylineId = GeneratedColumn<int>(
-      'polyline_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES polylines (id)'));
+    'polyline_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES polylines (id)',
+    ),
+  );
   static const VerificationMeta _latMeta = const VerificationMeta('lat');
   @override
   late final GeneratedColumn<double> lat = GeneratedColumn<double>(
-      'lat', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+    'lat',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _lngMeta = const VerificationMeta('lng');
   @override
   late final GeneratedColumn<double> lng = GeneratedColumn<double>(
-      'lng', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+    'lng',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [id, polylineId, lat, lng];
   @override
@@ -550,8 +624,10 @@ class $PolylinePointsTable extends PolylinePoints
   String get actualTableName => $name;
   static const String $name = 'polyline_points';
   @override
-  VerificationContext validateIntegrity(Insertable<PolylinePoint> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<PolylinePoint> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -559,21 +635,25 @@ class $PolylinePointsTable extends PolylinePoints
     }
     if (data.containsKey('polyline_id')) {
       context.handle(
-          _polylineIdMeta,
-          polylineId.isAcceptableOrUnknown(
-              data['polyline_id']!, _polylineIdMeta));
+        _polylineIdMeta,
+        polylineId.isAcceptableOrUnknown(data['polyline_id']!, _polylineIdMeta),
+      );
     } else if (isInserting) {
       context.missing(_polylineIdMeta);
     }
     if (data.containsKey('lat')) {
       context.handle(
-          _latMeta, lat.isAcceptableOrUnknown(data['lat']!, _latMeta));
+        _latMeta,
+        lat.isAcceptableOrUnknown(data['lat']!, _latMeta),
+      );
     } else if (isInserting) {
       context.missing(_latMeta);
     }
     if (data.containsKey('lng')) {
       context.handle(
-          _lngMeta, lng.isAcceptableOrUnknown(data['lng']!, _lngMeta));
+        _lngMeta,
+        lng.isAcceptableOrUnknown(data['lng']!, _lngMeta),
+      );
     } else if (isInserting) {
       context.missing(_lngMeta);
     }
@@ -586,14 +666,22 @@ class $PolylinePointsTable extends PolylinePoints
   PolylinePoint map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return PolylinePoint(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      polylineId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}polyline_id'])!,
-      lat: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}lat'])!,
-      lng: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}lng'])!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      polylineId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}polyline_id'],
+      )!,
+      lat: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lat'],
+      )!,
+      lng: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lng'],
+      )!,
     );
   }
 
@@ -608,11 +696,12 @@ class PolylinePoint extends DataClass implements Insertable<PolylinePoint> {
   final int polylineId;
   final double lat;
   final double lng;
-  const PolylinePoint(
-      {required this.id,
-      required this.polylineId,
-      required this.lat,
-      required this.lng});
+  const PolylinePoint({
+    required this.id,
+    required this.polylineId,
+    required this.lat,
+    required this.lng,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -632,8 +721,10 @@ class PolylinePoint extends DataClass implements Insertable<PolylinePoint> {
     );
   }
 
-  factory PolylinePoint.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory PolylinePoint.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return PolylinePoint(
       id: serializer.fromJson<int>(json['id']),
@@ -653,19 +744,23 @@ class PolylinePoint extends DataClass implements Insertable<PolylinePoint> {
     };
   }
 
-  PolylinePoint copyWith(
-          {int? id, int? polylineId, double? lat, double? lng}) =>
-      PolylinePoint(
-        id: id ?? this.id,
-        polylineId: polylineId ?? this.polylineId,
-        lat: lat ?? this.lat,
-        lng: lng ?? this.lng,
-      );
+  PolylinePoint copyWith({
+    int? id,
+    int? polylineId,
+    double? lat,
+    double? lng,
+  }) => PolylinePoint(
+    id: id ?? this.id,
+    polylineId: polylineId ?? this.polylineId,
+    lat: lat ?? this.lat,
+    lng: lng ?? this.lng,
+  );
   PolylinePoint copyWithCompanion(PolylinePointsCompanion data) {
     return PolylinePoint(
       id: data.id.present ? data.id.value : this.id,
-      polylineId:
-          data.polylineId.present ? data.polylineId.value : this.polylineId,
+      polylineId: data.polylineId.present
+          ? data.polylineId.value
+          : this.polylineId,
       lat: data.lat.present ? data.lat.value : this.lat,
       lng: data.lng.present ? data.lng.value : this.lng,
     );
@@ -710,9 +805,9 @@ class PolylinePointsCompanion extends UpdateCompanion<PolylinePoint> {
     required int polylineId,
     required double lat,
     required double lng,
-  })  : polylineId = Value(polylineId),
-        lat = Value(lat),
-        lng = Value(lng);
+  }) : polylineId = Value(polylineId),
+       lat = Value(lat),
+       lng = Value(lng);
   static Insertable<PolylinePoint> custom({
     Expression<int>? id,
     Expression<int>? polylineId,
@@ -727,11 +822,12 @@ class PolylinePointsCompanion extends UpdateCompanion<PolylinePoint> {
     });
   }
 
-  PolylinePointsCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? polylineId,
-      Value<double>? lat,
-      Value<double>? lng}) {
+  PolylinePointsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? polylineId,
+    Value<double>? lat,
+    Value<double>? lng,
+  }) {
     return PolylinePointsCompanion(
       id: id ?? this.id,
       polylineId: polylineId ?? this.polylineId,
@@ -774,385 +870,989 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $PolylinesTable polylines = $PolylinesTable(this);
-  late final $StravaActivitiesTable stravaActivities =
-      $StravaActivitiesTable(this);
+  late final $StravaActivitiesTable stravaActivities = $StravaActivitiesTable(
+    this,
+  );
   late final $PolylinePointsTable polylinePoints = $PolylinePointsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [polylines, stravaActivities, polylinePoints];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    polylines,
+    stravaActivities,
+    polylinePoints,
+  ];
 }
 
-typedef $$PolylinesTableCreateCompanionBuilder = PolylinesCompanion Function({
-  required int id,
-  Value<int> rowid,
-});
-typedef $$PolylinesTableUpdateCompanionBuilder = PolylinesCompanion Function({
-  Value<int> id,
-  Value<int> rowid,
-});
+typedef $$PolylinesTableCreateCompanionBuilder =
+    PolylinesCompanion Function({required int id, Value<int> rowid});
+typedef $$PolylinesTableUpdateCompanionBuilder =
+    PolylinesCompanion Function({Value<int> id, Value<int> rowid});
 
-class $$PolylinesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $PolylinesTable,
-    Polyline,
-    $$PolylinesTableFilterComposer,
-    $$PolylinesTableOrderingComposer,
-    $$PolylinesTableCreateCompanionBuilder,
-    $$PolylinesTableUpdateCompanionBuilder> {
-  $$PolylinesTableTableManager(_$AppDatabase db, $PolylinesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$PolylinesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$PolylinesTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              PolylinesCompanion(
-            id: id,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required int id,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              PolylinesCompanion.insert(
-            id: id,
-            rowid: rowid,
-          ),
-        ));
+final class $$PolylinesTableReferences
+    extends BaseReferences<_$AppDatabase, $PolylinesTable, Polyline> {
+  $$PolylinesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$StravaActivitiesTable, List<StravaActivity>>
+  _stravaActivitiesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.stravaActivities,
+    aliasName: $_aliasNameGenerator(
+      db.polylines.id,
+      db.stravaActivities.polylineId,
+    ),
+  );
+
+  $$StravaActivitiesTableProcessedTableManager get stravaActivitiesRefs {
+    final manager = $$StravaActivitiesTableTableManager(
+      $_db,
+      $_db.stravaActivities,
+    ).filter((f) => f.polylineId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _stravaActivitiesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$PolylinePointsTable, List<PolylinePoint>>
+  _polylinePointsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.polylinePoints,
+    aliasName: $_aliasNameGenerator(
+      db.polylines.id,
+      db.polylinePoints.polylineId,
+    ),
+  );
+
+  $$PolylinePointsTableProcessedTableManager get polylinePointsRefs {
+    final manager = $$PolylinePointsTableTableManager(
+      $_db,
+      $_db.polylinePoints,
+    ).filter((f) => f.polylineId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_polylinePointsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$PolylinesTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $PolylinesTable> {
-  $$PolylinesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $PolylinesTable> {
+  $$PolylinesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ComposableFilter stravaActivitiesRefs(
-      ComposableFilter Function($$StravaActivitiesTableFilterComposer f) f) {
-    final $$StravaActivitiesTableFilterComposer composer =
-        $state.composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $state.db.stravaActivities,
-            getReferencedColumn: (t) => t.polylineId,
-            builder: (joinBuilder, parentComposers) =>
-                $$StravaActivitiesTableFilterComposer(ComposerState($state.db,
-                    $state.db.stravaActivities, joinBuilder, parentComposers)));
+  Expression<bool> stravaActivitiesRefs(
+    Expression<bool> Function($$StravaActivitiesTableFilterComposer f) f,
+  ) {
+    final $$StravaActivitiesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.stravaActivities,
+      getReferencedColumn: (t) => t.polylineId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StravaActivitiesTableFilterComposer(
+            $db: $db,
+            $table: $db.stravaActivities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 
-  ComposableFilter polylinePointsRefs(
-      ComposableFilter Function($$PolylinePointsTableFilterComposer f) f) {
-    final $$PolylinePointsTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.polylinePoints,
-        getReferencedColumn: (t) => t.polylineId,
-        builder: (joinBuilder, parentComposers) =>
-            $$PolylinePointsTableFilterComposer(ComposerState($state.db,
-                $state.db.polylinePoints, joinBuilder, parentComposers)));
+  Expression<bool> polylinePointsRefs(
+    Expression<bool> Function($$PolylinePointsTableFilterComposer f) f,
+  ) {
+    final $$PolylinePointsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.polylinePoints,
+      getReferencedColumn: (t) => t.polylineId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinePointsTableFilterComposer(
+            $db: $db,
+            $table: $db.polylinePoints,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
 
 class $$PolylinesTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $PolylinesTable> {
-  $$PolylinesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $PolylinesTable> {
+  $$PolylinesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
-typedef $$StravaActivitiesTableCreateCompanionBuilder
-    = StravaActivitiesCompanion Function({
-  required int id,
-  required String name,
-  required double distance,
-  required DateTime date,
-  Value<bool> isVisible,
-  required int polylineId,
-  Value<int> rowid,
-});
-typedef $$StravaActivitiesTableUpdateCompanionBuilder
-    = StravaActivitiesCompanion Function({
-  Value<int> id,
-  Value<String> name,
-  Value<double> distance,
-  Value<DateTime> date,
-  Value<bool> isVisible,
-  Value<int> polylineId,
-  Value<int> rowid,
-});
+class $$PolylinesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PolylinesTable> {
+  $$PolylinesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
 
-class $$StravaActivitiesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $StravaActivitiesTable,
-    StravaActivity,
-    $$StravaActivitiesTableFilterComposer,
-    $$StravaActivitiesTableOrderingComposer,
-    $$StravaActivitiesTableCreateCompanionBuilder,
-    $$StravaActivitiesTableUpdateCompanionBuilder> {
-  $$StravaActivitiesTableTableManager(
-      _$AppDatabase db, $StravaActivitiesTable table)
-      : super(TableManagerState(
+  Expression<T> stravaActivitiesRefs<T extends Object>(
+    Expression<T> Function($$StravaActivitiesTableAnnotationComposer a) f,
+  ) {
+    final $$StravaActivitiesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.stravaActivities,
+      getReferencedColumn: (t) => t.polylineId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StravaActivitiesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.stravaActivities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> polylinePointsRefs<T extends Object>(
+    Expression<T> Function($$PolylinePointsTableAnnotationComposer a) f,
+  ) {
+    final $$PolylinePointsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.polylinePoints,
+      getReferencedColumn: (t) => t.polylineId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinePointsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.polylinePoints,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$PolylinesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PolylinesTable,
+          Polyline,
+          $$PolylinesTableFilterComposer,
+          $$PolylinesTableOrderingComposer,
+          $$PolylinesTableAnnotationComposer,
+          $$PolylinesTableCreateCompanionBuilder,
+          $$PolylinesTableUpdateCompanionBuilder,
+          (Polyline, $$PolylinesTableReferences),
+          Polyline,
+          PrefetchHooks Function({
+            bool stravaActivitiesRefs,
+            bool polylinePointsRefs,
+          })
+        > {
+  $$PolylinesTableTableManager(_$AppDatabase db, $PolylinesTable table)
+    : super(
+        TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$StravaActivitiesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$StravaActivitiesTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<double> distance = const Value.absent(),
-            Value<DateTime> date = const Value.absent(),
-            Value<bool> isVisible = const Value.absent(),
-            Value<int> polylineId = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              StravaActivitiesCompanion(
-            id: id,
-            name: name,
-            distance: distance,
-            date: date,
-            isVisible: isVisible,
-            polylineId: polylineId,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required int id,
-            required String name,
-            required double distance,
-            required DateTime date,
-            Value<bool> isVisible = const Value.absent(),
-            required int polylineId,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              StravaActivitiesCompanion.insert(
-            id: id,
-            name: name,
-            distance: distance,
-            date: date,
-            isVisible: isVisible,
-            polylineId: polylineId,
-            rowid: rowid,
-          ),
-        ));
+          createFilteringComposer: () =>
+              $$PolylinesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PolylinesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PolylinesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PolylinesCompanion(id: id, rowid: rowid),
+          createCompanionCallback:
+              ({required int id, Value<int> rowid = const Value.absent()}) =>
+                  PolylinesCompanion.insert(id: id, rowid: rowid),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$PolylinesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({stravaActivitiesRefs = false, polylinePointsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (stravaActivitiesRefs) db.stravaActivities,
+                    if (polylinePointsRefs) db.polylinePoints,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (stravaActivitiesRefs)
+                        await $_getPrefetchedData<
+                          Polyline,
+                          $PolylinesTable,
+                          StravaActivity
+                        >(
+                          currentTable: table,
+                          referencedTable: $$PolylinesTableReferences
+                              ._stravaActivitiesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$PolylinesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).stravaActivitiesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.polylineId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (polylinePointsRefs)
+                        await $_getPrefetchedData<
+                          Polyline,
+                          $PolylinesTable,
+                          PolylinePoint
+                        >(
+                          currentTable: table,
+                          referencedTable: $$PolylinesTableReferences
+                              ._polylinePointsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$PolylinesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).polylinePointsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.polylineId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$PolylinesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PolylinesTable,
+      Polyline,
+      $$PolylinesTableFilterComposer,
+      $$PolylinesTableOrderingComposer,
+      $$PolylinesTableAnnotationComposer,
+      $$PolylinesTableCreateCompanionBuilder,
+      $$PolylinesTableUpdateCompanionBuilder,
+      (Polyline, $$PolylinesTableReferences),
+      Polyline,
+      PrefetchHooks Function({
+        bool stravaActivitiesRefs,
+        bool polylinePointsRefs,
+      })
+    >;
+typedef $$StravaActivitiesTableCreateCompanionBuilder =
+    StravaActivitiesCompanion Function({
+      required int id,
+      required String name,
+      required double distance,
+      required DateTime date,
+      Value<bool> isVisible,
+      required int polylineId,
+      Value<int> rowid,
+    });
+typedef $$StravaActivitiesTableUpdateCompanionBuilder =
+    StravaActivitiesCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<double> distance,
+      Value<DateTime> date,
+      Value<bool> isVisible,
+      Value<int> polylineId,
+      Value<int> rowid,
+    });
+
+final class $$StravaActivitiesTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $StravaActivitiesTable, StravaActivity> {
+  $$StravaActivitiesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $PolylinesTable _polylineIdTable(_$AppDatabase db) =>
+      db.polylines.createAlias(
+        $_aliasNameGenerator(db.stravaActivities.polylineId, db.polylines.id),
+      );
+
+  $$PolylinesTableProcessedTableManager get polylineId {
+    final $_column = $_itemColumn<int>('polyline_id')!;
+
+    final manager = $$PolylinesTableTableManager(
+      $_db,
+      $_db.polylines,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_polylineIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 }
 
 class $$StravaActivitiesTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $StravaActivitiesTable> {
-  $$StravaActivitiesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $StravaActivitiesTable> {
+  $$StravaActivitiesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<double> get distance => $state.composableBuilder(
-      column: $state.table.distance,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<double> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<DateTime> get date => $state.composableBuilder(
-      column: $state.table.date,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<bool> get isVisible => $state.composableBuilder(
-      column: $state.table.isVisible,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<bool> get isVisible => $composableBuilder(
+    column: $table.isVisible,
+    builder: (column) => ColumnFilters(column),
+  );
 
   $$PolylinesTableFilterComposer get polylineId {
-    final $$PolylinesTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.polylineId,
-        referencedTable: $state.db.polylines,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$PolylinesTableFilterComposer(ComposerState(
-                $state.db, $state.db.polylines, joinBuilder, parentComposers)));
+    final $$PolylinesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.polylineId,
+      referencedTable: $db.polylines,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinesTableFilterComposer(
+            $db: $db,
+            $table: $db.polylines,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
 class $$StravaActivitiesTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $StravaActivitiesTable> {
-  $$StravaActivitiesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $StravaActivitiesTable> {
+  $$StravaActivitiesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<double> get distance => $state.composableBuilder(
-      column: $state.table.distance,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<double> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<DateTime> get date => $state.composableBuilder(
-      column: $state.table.date,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<bool> get isVisible => $state.composableBuilder(
-      column: $state.table.isVisible,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<bool> get isVisible => $composableBuilder(
+    column: $table.isVisible,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   $$PolylinesTableOrderingComposer get polylineId {
-    final $$PolylinesTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.polylineId,
-        referencedTable: $state.db.polylines,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$PolylinesTableOrderingComposer(ComposerState(
-                $state.db, $state.db.polylines, joinBuilder, parentComposers)));
+    final $$PolylinesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.polylineId,
+      referencedTable: $db.polylines,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinesTableOrderingComposer(
+            $db: $db,
+            $table: $db.polylines,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
-typedef $$PolylinePointsTableCreateCompanionBuilder = PolylinePointsCompanion
-    Function({
-  Value<int> id,
-  required int polylineId,
-  required double lat,
-  required double lng,
-});
-typedef $$PolylinePointsTableUpdateCompanionBuilder = PolylinePointsCompanion
-    Function({
-  Value<int> id,
-  Value<int> polylineId,
-  Value<double> lat,
-  Value<double> lng,
-});
+class $$StravaActivitiesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $StravaActivitiesTable> {
+  $$StravaActivitiesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
 
-class $$PolylinePointsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $PolylinePointsTable,
-    PolylinePoint,
-    $$PolylinePointsTableFilterComposer,
-    $$PolylinePointsTableOrderingComposer,
-    $$PolylinePointsTableCreateCompanionBuilder,
-    $$PolylinePointsTableUpdateCompanionBuilder> {
-  $$PolylinePointsTableTableManager(
-      _$AppDatabase db, $PolylinePointsTable table)
-      : super(TableManagerState(
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get distance =>
+      $composableBuilder(column: $table.distance, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<bool> get isVisible =>
+      $composableBuilder(column: $table.isVisible, builder: (column) => column);
+
+  $$PolylinesTableAnnotationComposer get polylineId {
+    final $$PolylinesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.polylineId,
+      referencedTable: $db.polylines,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.polylines,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$StravaActivitiesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $StravaActivitiesTable,
+          StravaActivity,
+          $$StravaActivitiesTableFilterComposer,
+          $$StravaActivitiesTableOrderingComposer,
+          $$StravaActivitiesTableAnnotationComposer,
+          $$StravaActivitiesTableCreateCompanionBuilder,
+          $$StravaActivitiesTableUpdateCompanionBuilder,
+          (StravaActivity, $$StravaActivitiesTableReferences),
+          StravaActivity,
+          PrefetchHooks Function({bool polylineId})
+        > {
+  $$StravaActivitiesTableTableManager(
+    _$AppDatabase db,
+    $StravaActivitiesTable table,
+  ) : super(
+        TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$PolylinePointsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$PolylinePointsTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> polylineId = const Value.absent(),
-            Value<double> lat = const Value.absent(),
-            Value<double> lng = const Value.absent(),
-          }) =>
-              PolylinePointsCompanion(
-            id: id,
-            polylineId: polylineId,
-            lat: lat,
-            lng: lng,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int polylineId,
-            required double lat,
-            required double lng,
-          }) =>
-              PolylinePointsCompanion.insert(
-            id: id,
-            polylineId: polylineId,
-            lat: lat,
-            lng: lng,
-          ),
-        ));
+          createFilteringComposer: () =>
+              $$StravaActivitiesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$StravaActivitiesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$StravaActivitiesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double> distance = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<bool> isVisible = const Value.absent(),
+                Value<int> polylineId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StravaActivitiesCompanion(
+                id: id,
+                name: name,
+                distance: distance,
+                date: date,
+                isVisible: isVisible,
+                polylineId: polylineId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int id,
+                required String name,
+                required double distance,
+                required DateTime date,
+                Value<bool> isVisible = const Value.absent(),
+                required int polylineId,
+                Value<int> rowid = const Value.absent(),
+              }) => StravaActivitiesCompanion.insert(
+                id: id,
+                name: name,
+                distance: distance,
+                date: date,
+                isVisible: isVisible,
+                polylineId: polylineId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$StravaActivitiesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({polylineId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (polylineId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.polylineId,
+                                referencedTable:
+                                    $$StravaActivitiesTableReferences
+                                        ._polylineIdTable(db),
+                                referencedColumn:
+                                    $$StravaActivitiesTableReferences
+                                        ._polylineIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$StravaActivitiesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $StravaActivitiesTable,
+      StravaActivity,
+      $$StravaActivitiesTableFilterComposer,
+      $$StravaActivitiesTableOrderingComposer,
+      $$StravaActivitiesTableAnnotationComposer,
+      $$StravaActivitiesTableCreateCompanionBuilder,
+      $$StravaActivitiesTableUpdateCompanionBuilder,
+      (StravaActivity, $$StravaActivitiesTableReferences),
+      StravaActivity,
+      PrefetchHooks Function({bool polylineId})
+    >;
+typedef $$PolylinePointsTableCreateCompanionBuilder =
+    PolylinePointsCompanion Function({
+      Value<int> id,
+      required int polylineId,
+      required double lat,
+      required double lng,
+    });
+typedef $$PolylinePointsTableUpdateCompanionBuilder =
+    PolylinePointsCompanion Function({
+      Value<int> id,
+      Value<int> polylineId,
+      Value<double> lat,
+      Value<double> lng,
+    });
+
+final class $$PolylinePointsTableReferences
+    extends BaseReferences<_$AppDatabase, $PolylinePointsTable, PolylinePoint> {
+  $$PolylinePointsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $PolylinesTable _polylineIdTable(_$AppDatabase db) =>
+      db.polylines.createAlias(
+        $_aliasNameGenerator(db.polylinePoints.polylineId, db.polylines.id),
+      );
+
+  $$PolylinesTableProcessedTableManager get polylineId {
+    final $_column = $_itemColumn<int>('polyline_id')!;
+
+    final manager = $$PolylinesTableTableManager(
+      $_db,
+      $_db.polylines,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_polylineIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 }
 
 class $$PolylinePointsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $PolylinePointsTable> {
-  $$PolylinePointsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $PolylinePointsTable> {
+  $$PolylinePointsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<double> get lat => $state.composableBuilder(
-      column: $state.table.lat,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnFilters(column),
+  );
 
-  ColumnFilters<double> get lng => $state.composableBuilder(
-      column: $state.table.lng,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<double> get lng => $composableBuilder(
+    column: $table.lng,
+    builder: (column) => ColumnFilters(column),
+  );
 
   $$PolylinesTableFilterComposer get polylineId {
-    final $$PolylinesTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.polylineId,
-        referencedTable: $state.db.polylines,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$PolylinesTableFilterComposer(ComposerState(
-                $state.db, $state.db.polylines, joinBuilder, parentComposers)));
+    final $$PolylinesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.polylineId,
+      referencedTable: $db.polylines,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinesTableFilterComposer(
+            $db: $db,
+            $table: $db.polylines,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
 class $$PolylinePointsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $PolylinePointsTable> {
-  $$PolylinePointsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $PolylinePointsTable> {
+  $$PolylinePointsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<double> get lat => $state.composableBuilder(
-      column: $state.table.lat,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnOrderings(column),
+  );
 
-  ColumnOrderings<double> get lng => $state.composableBuilder(
-      column: $state.table.lng,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<double> get lng => $composableBuilder(
+    column: $table.lng,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   $$PolylinesTableOrderingComposer get polylineId {
-    final $$PolylinesTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.polylineId,
-        referencedTable: $state.db.polylines,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$PolylinesTableOrderingComposer(ComposerState(
-                $state.db, $state.db.polylines, joinBuilder, parentComposers)));
+    final $$PolylinesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.polylineId,
+      referencedTable: $db.polylines,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinesTableOrderingComposer(
+            $db: $db,
+            $table: $db.polylines,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
+
+class $$PolylinePointsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PolylinePointsTable> {
+  $$PolylinePointsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<double> get lat =>
+      $composableBuilder(column: $table.lat, builder: (column) => column);
+
+  GeneratedColumn<double> get lng =>
+      $composableBuilder(column: $table.lng, builder: (column) => column);
+
+  $$PolylinesTableAnnotationComposer get polylineId {
+    final $$PolylinesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.polylineId,
+      referencedTable: $db.polylines,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PolylinesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.polylines,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PolylinePointsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PolylinePointsTable,
+          PolylinePoint,
+          $$PolylinePointsTableFilterComposer,
+          $$PolylinePointsTableOrderingComposer,
+          $$PolylinePointsTableAnnotationComposer,
+          $$PolylinePointsTableCreateCompanionBuilder,
+          $$PolylinePointsTableUpdateCompanionBuilder,
+          (PolylinePoint, $$PolylinePointsTableReferences),
+          PolylinePoint,
+          PrefetchHooks Function({bool polylineId})
+        > {
+  $$PolylinePointsTableTableManager(
+    _$AppDatabase db,
+    $PolylinePointsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PolylinePointsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PolylinePointsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PolylinePointsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> polylineId = const Value.absent(),
+                Value<double> lat = const Value.absent(),
+                Value<double> lng = const Value.absent(),
+              }) => PolylinePointsCompanion(
+                id: id,
+                polylineId: polylineId,
+                lat: lat,
+                lng: lng,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int polylineId,
+                required double lat,
+                required double lng,
+              }) => PolylinePointsCompanion.insert(
+                id: id,
+                polylineId: polylineId,
+                lat: lat,
+                lng: lng,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$PolylinePointsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({polylineId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (polylineId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.polylineId,
+                                referencedTable: $$PolylinePointsTableReferences
+                                    ._polylineIdTable(db),
+                                referencedColumn:
+                                    $$PolylinePointsTableReferences
+                                        ._polylineIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PolylinePointsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PolylinePointsTable,
+      PolylinePoint,
+      $$PolylinePointsTableFilterComposer,
+      $$PolylinePointsTableOrderingComposer,
+      $$PolylinePointsTableAnnotationComposer,
+      $$PolylinePointsTableCreateCompanionBuilder,
+      $$PolylinePointsTableUpdateCompanionBuilder,
+      (PolylinePoint, $$PolylinePointsTableReferences),
+      PolylinePoint,
+      PrefetchHooks Function({bool polylineId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
